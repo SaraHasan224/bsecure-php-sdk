@@ -21,9 +21,9 @@ class Constant
 
     const AUTH_GRANT_TYPE = "client_credentials";
 
-    const AUTH_SERVER_URL = 'https://api-dev.bsecure.app/';
+    const AUTH_SERVER_URL = 'https://api.bsecure.pk/';
 
-    const LOGIN_REDIRECT_URL = 'https://login-dev.bsecure.app/auth/sso';
+    const LOGIN_REDIRECT_URL = 'http://login.bsecure.pk/auth/sso';
 
 
     const DEFAULT_APP_ENVIRONMENT = 'sandbox';
@@ -60,7 +60,7 @@ class Constant
 
     const BUILDERS_DASHBOARD_LINK = "http://builder.bsecure.pk/";
     const INTEGRATION_TAB_LINK = "http://builder.bsecure.pk/integration-live";
-    const SUPPORT_EMAIL = "support@bsecure.pk";
-    const DOCUMENTATION_LINK = "support@bsecure.pk";
+    const SUPPORT_EMAIL = "hello@bsecure.pk";
+    const DOCUMENTATION_LINK = "https://www.bsecure.pk/developers";
 
 }
