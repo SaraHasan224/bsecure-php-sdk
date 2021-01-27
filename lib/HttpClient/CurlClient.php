@@ -4,6 +4,7 @@ namespace bSecure\HttpClient;
 
 use bSecure\Exception;
 use bSecure\bSecure;
+use bSecure\Helpers\Constant;
 use bSecure\Util;
 
 // @codingStandardsIgnoreStart
@@ -279,9 +280,7 @@ class CurlClient implements ClientInterface
             case \CURLE_COULDNT_RESOLVE_HOST:
             case \CURLE_OPERATION_TIMEOUTED:
                 $msg = "Could not connect to bSecure ({$url}).  Please check your "
-                  . 'internet connection and try again.  If this problem persists, '
-                  . "you should check bSecure's service status at "
-                  . 'https://twitter.com/stripestatus, or';
+                  . 'internet connection and try again, or';
 
                 break;
 
@@ -298,7 +297,7 @@ class CurlClient implements ClientInterface
                 $msg = 'Unexpected error communicating with bSecure.  '
                   . 'If this problem persists,';
         }
-        $msg .= ' let us know at support@stripe.com.';
+        $msg .= ' let us know at '.Constant::SUPPORT_EMAIL.'.';
 
         $msg .= "\n\n(Network error [errno {$errno}]: {$message})";
 
@@ -307,89 +306,6 @@ class CurlClient implements ClientInterface
         }
 
         throw new Exception\ApiConnectionException($msg);
-    }
-
-    /**
-     * Checks if an error is a problem that we should retry on. This includes both
-     * socket errors that may represent an intermittent problem and some special
-     * HTTP statuses.
-     *
-     * @param int $errno
-     * @param int $rcode
-     * @param array|\bSecure\Util\CaseInsensitiveArray $rheaders
-     * @param int $numRetries
-     *
-     * @return bool
-     */
-    private function shouldRetry($errno, $rcode, $rheaders, $numRetries)
-    {
-
-        // Retry on timeout-related problems (either on open or read).
-        if (\CURLE_OPERATION_TIMEOUTED === $errno) {
-            return true;
-        }
-
-        // Destination refused the connection, the connection was reset, or a
-        // variety of other connection failures. This could occur from a single
-        // saturated server, so retry in case it's intermittent.
-        if (\CURLE_COULDNT_CONNECT === $errno) {
-            return true;
-        }
-
-        // The API may ask us not to retry (eg; if doing so would be a no-op)
-        // or advise us to retry (eg; in cases of lock timeouts); we defer to that.
-        if (isset($rheaders['stripe-should-retry'])) {
-            if ('false' === $rheaders['stripe-should-retry']) {
-                return false;
-            }
-            if ('true' === $rheaders['stripe-should-retry']) {
-                return true;
-            }
-        }
-
-        // 409 Conflict
-        if (409 === $rcode) {
-            return true;
-        }
-
-        // Retry on 500, 503, and other internal errors.
-        //
-        // Note that we expect the stripe-should-retry header to be false
-        // in most cases when a 500 is returned, since our idempotency framework
-        // would typically replay it anyway.
-        if ($rcode >= 500) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Provides the number of seconds to wait before retrying a request.
-     *
-     * @param int $numRetries
-     * @param array|\bSecure\Util\CaseInsensitiveArray $rheaders
-     *
-     * @return int
-     */
-    private function sleepTime($numRetries, $rheaders)
-    {
-        // Apply exponential backoff with $initialNetworkRetryDelay on the
-        // number of $numRetries so far as inputs. Do not allow the number to exceed
-        // $maxNetworkRetryDelay.
-        $sleepSeconds = \min(
-          Stripe::getInitialNetworkRetryDelay() * 1.0 * 2 ** ($numRetries - 1),
-          Stripe::getMaxNetworkRetryDelay()
-        );
-
-        // Apply some jitter by randomizing the value in the range of
-        // ($sleepSeconds / 2) to ($sleepSeconds).
-        $sleepSeconds *= 0.5 * (1 + $this->randomGenerator->randFloat());
-
-        // And never sleep less than the time the API asks us to wait, assuming it's a reasonable ask.
-        $retryAfter = isset($rheaders['retry-after']) ? (float) ($rheaders['retry-after']) : 0.0;
-
-        return $sleepSeconds;
     }
 
     /**
@@ -437,24 +353,5 @@ class CurlClient implements ClientInterface
         $curlVersion = \curl_version()['version'];
 
         return \version_compare($curlVersion, '7.60.0') >= 0;
-    }
-
-    /**
-     * Checks if a list of headers contains a specific header name.
-     *
-     * @param string[] $headers
-     * @param string $name
-     *
-     * @return bool
-     */
-    private function hasHeader($headers, $name)
-    {
-        foreach ($headers as $header) {
-            if (0 === \strncasecmp($header, "{$name}: ", \strlen($name) + 2)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

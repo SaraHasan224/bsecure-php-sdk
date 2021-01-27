@@ -46,9 +46,9 @@ class Order
     ];
 
     /**
-     * Sets the client_id to be used for Connect requests.
+     * Sets the orderId to be used for Create Order requests.
      *
-     * @param string $clientId
+     * @param string $orderId
      */
     public static function setOrderId($orderId)
     {
@@ -56,9 +56,9 @@ class Order
         self::$orderId = $orderId;
     }
     /**
-     * Sets the clientSecret to be used for Connect requests.
+     * Sets the customer object to be used for Create Order requests.
      *
-     * @param string $clientSecret
+     * @param array $customer
      */
     public static function setCustomer($customerData)
     {
@@ -68,9 +68,9 @@ class Order
     }
 
     /**
-     * Sets the clientSecret to be used for Connect requests.
+     * Sets the shipment object to be used for Create Order requests.
      *
-     * @param string $clientSecret
+     * @param array $shipment
      */
     public static function setShipmentDetails($shipmentData)
     {
@@ -82,9 +82,9 @@ class Order
     }
 
     /**
-     * Sets the clientSecret to be used for Connect requests.
+     * Sets the products object to be used for Create Order requests.
      *
-     * @param string $clientSecret
+     * @param array $products
      */
     public static function setCartItems($products)
     {
@@ -132,9 +132,9 @@ class Order
     }
 
     /**
-     * Sets the clientSecret to be used for Connect requests.
+     * Sets the sub_total_amount, discount_amount and total_amount to be used for Create Order requests.
      *
-     * @param string $clientSecret
+     * @param string $orderCharges
      */
     public static function setCharges($orderCharges)
     {
@@ -212,7 +212,6 @@ class Order
         ];
     }
 
-
     private static function _setOrderPayload()
     {
         if(!self::$chargesDefinition)
@@ -251,8 +250,15 @@ class Order
         }
 
     }
+
     /**
-     * @return string the Auth Token used for requests
+     * @param null
+     *
+     * @throws \bSecure\ApiResponse if the request fails
+     * @throws \bSecure\Exception\AuthenticationException if authentication fails
+     * @throws \bSecure\Exception\UnexpectedValueException if authentication fails
+     *
+     * @return \bSecure\ApiResponse  Returns create order API response
      */
     public static function createOrder()
     {
@@ -266,13 +272,18 @@ class Order
         if($access_token == null)
             throw new Exception\AuthenticationException($msg);
         else{
-            return SSOController::createOrder(self::$orderPayload);
+            return OrderController::createOrder(self::$orderPayload);
         }
     }
 
-
     /**
-     * @return string the Auth Token used for requests
+     * @param order_ref
+     *
+     * @throws \bSecure\ApiResponse if the request fails
+     * @throws \bSecure\Exception\AuthenticationException if authentication fails
+     * @throws \bSecure\Exception\UnexpectedValueException if authentication fails
+     *
+     * @return \bSecure\ApiResponse  Returns create order API response
      */
     public static function orderStatus($order_ref)
     {
@@ -284,6 +295,6 @@ class Order
             throw new Exception\UnexpectedValueException($msg);
         }
 
-        return SSOController::orderStatus($order_ref);
+        return OrderController::orderStatus($order_ref);
     }
 }

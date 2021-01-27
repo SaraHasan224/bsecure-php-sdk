@@ -1,8 +1,7 @@
 # Changelog
 
-All notable changes to `bsecure-laravel` will be documented in this file
+All notable changes to `bsecure-php` will be documented in this file
 
-## 1.0.0 - 2020-12-16
+## 1.0.0 - 2021-01-27
 
 - initial release
-- Support Composer and Packagist

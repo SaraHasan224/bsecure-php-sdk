@@ -20,6 +20,9 @@ The bindings require the following extensions in order to work properly:
 
 If you install manually, you'll want to make sure that these extensions are available.
 
+### Documentation
+Visit our Site  [bSecure](https://www.bsecure.pk/) to read the documentation and get support.
+
 ### Configuration Setup
 
 By following a few simple steps, you can set up your **bSecure Checkout** and **Single-Sign-On**. 
@@ -34,18 +37,15 @@ By following a few simple steps, you can set up your **bSecure Checkout** and **
     b. *Login Redirect URL* Required for feature **Login with bSecure**\
     c. *Checkout Redirect URL* Required for feature **Pay with bSecure**\
     d. *Checkout Order Status webhook* Required for feature **Pay with bSecure**
-5. Save your client credentials (<YOUR-CLIENT-ID> and <YOUR-CLIENT-SECRET>)
-6. Please make sure to keep credentials at safe place in your code
+5. Save your client credentials ('<YOUR-CLIENT-ID> and <YOUR-CLIENT-SECRET>')
+6. Please make sure to keep credentials at safe place in your code.
 
-## Documentation
-Visit our Site  [bSecure](https://www.bsecure.pk/) to read the documentation and get support.
 
 ## Client Authentication
 To call below mentioned functions of bSecure, you first have to authenticate your client.
 Following function will be used to authenticate your client:
 
 ```
-    \bSecure\bSecure::initialize();
     \bSecure\bSecure::setClientId('<YOUR-CLIENT-ID>');
     \bSecure\bSecure::setClientSecret('<YOUR-CLIENT-SECRET>');
     \bSecure\bSecure::setAppEnvironment('<YOUR-APP-ENVIRONMENT>');
@@ -135,6 +135,7 @@ Charges object should be in below mentioned format:
 
 #### Create Order
 ```
+\bSecure\Order::setOrderId('<YOUR-ORDER-ID>');
 \bSecure\Order::setCustomer($customer);
 \bSecure\Order::setShipmentDetails($shipment);
 \bSecure\Order::setCartItems($products);
@@ -149,7 +150,7 @@ array (
   'expiry' => '2020-11-27 10:55:14',
   'checkout_url' => 'bSecure-checkout-url',
   'order_reference' => 'bsecure-reference',
-  'merchant_order_id' => 'your-order-id',
+  'merchant_order_id' => '<YOUR-ORDER-ID>',
 ) 
 ```
 >If you are using a web-solution then simply redirect the user to checkout_url
@@ -167,7 +168,7 @@ When order is created successfully on bSecure, you will be redirected to bSecure
 
 #### Callback on Order Placement
 Once the order is successfully placed, bSecure will redirect the customer to the url you mentioned in “Checkout
-redirect url” in your [environment settings](https://builder.bsecure.pk/) in [Builder's Portal](https://builder.bsecure.pk/), with one additional param “order_ref” in the query
+redirect url” in your [environment settings](https://builder.bsecure.pk/) in [Builder's Portal](https://builder.bsecure.pk/), with one additional param **order_ref** in the query
 string.
 
 #### Order Updates
@@ -195,6 +196,7 @@ $client = bSecure\SSO::clientAuthenticate($state);
 return redirect($client['redirect_url']); 
 
 ```
+In response clientAuthenticate(), will return a redirect_url, on which you have to redirect your customer.
 ```
 array (
   "redirect_url": "<SSO-REDIRECT-LINK>",
@@ -215,7 +217,7 @@ Verify the state you received in the callback by matching it to the value you st
 request, you should only proceed if and only if both values match.
 
 ### Get Customer Profile
-Auth_code recieved from **Client Authorization** should be passed to method below to get customer profile. 
+Auth_code recieved from **[Client Authorization]((#client-authorization))** should be passed to method below to get customer profile. 
 
 
 ```

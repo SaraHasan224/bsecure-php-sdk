@@ -7,14 +7,13 @@ use bSecure\Helpers\Constant;
 abstract class OrderController
 {
     /**
-     * Generate authorization credentials to connect your builder's account to your platform and
-     * fetch the record from bSecure.
+     * Create an order on your builder's behalf on bsecure server
      *
-     * @param array $params
+     * @param array $orderPayload
      *
-     * @throws \Stripe\Exception\OAuth\OAuthErrorException if the request fails
+     * @throws \bSecure\ApiResponse if the request fails
      *
-     * @return OAuthObject object containing your authorization credentials
+     * @return \bSecure\ApiResponse
      */
     public static function createOrder($orderPayload)
     {
@@ -27,16 +26,16 @@ abstract class OrderController
         );
         return $response[0];
     }
+
     /**
-     * Generate authorization credentials to connect your builder's account to your platform and
-     * fetch the record from bSecure.
+     * Return order's status
      *
-     * @param array $params
+     * @param string $orderRef
      *
-     * @throws \Stripe\Exception\OAuth\OAuthErrorException if the request fails
-     *
-     * @return OAuthObject object containing your authorization credentials
-     */
+     * @throws \bSecure\ApiResponse if the request fails
+     * @return \bSecure\ApiResponse
+    */
+
     public static function orderStatus($orderRef)
     {
         $requestor = new ApiRequest();

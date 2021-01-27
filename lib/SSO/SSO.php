@@ -8,23 +8,23 @@ use bSecure\Helpers\Constant;
  */
 class SSO
 {
-    /** @var string The merchant order id to be used for Create Order requests. */
+    /** @var string The state to be used to verify successful authorization callback. */
     public static $state = null;
     public static $stateDefinition = false;
-    /** @var string The merchant order id to be used for Create Order requests. */
+    /** @var string The authCode to be used for receiving customer profile after successful client authorization. */
     public static $authCode = null;
     public static $authCodeDefinition = false;
 
-    /** @var array The customer object to be used for Create Order requests. */
+    /** @var string The scope is to be used for authorization callback. */
     private static $scope = Constant::SCOPE;
 
-    /** @var array The products object to be used for Create Order requests. */
+    /** @var string The response_type is to be used for authorization callback. */
     private static $response_type = Constant::RESPONSE_TYPE;
 
     /**
-     * Sets the client_id to be used for Connect requests.
+     * Sets the state to be used to verify successful authorization callback.
      *
-     * @param string $clientId
+     * @param string $state
      */
     private static function setState($state)
     {
@@ -33,19 +33,31 @@ class SSO
     }
 
     /**
-     * Sets the client_id to be used for Connect requests.
+     * Sets the authCode to be used for receiving customer profile after successful client authorization.
      *
-     * @param string $clientId
+     * @param string $authCode
      */
     private static function setAuthCode($authCode)
     {
         self::$authCodeDefinition =true;
         self::$authCode = $authCode;
     }
+
     /**
-     * Sets the client_id to be used for Connect requests.
+     * Sets the authorization request link to be used for sso requests.
      *
-     * @param string $clientId
+     */
+    private static function setAuthenticationLink()
+    {
+        $clientId = bSecure::getClientId();
+        $scope = self::$scope;
+        $response_type = self::$response_type;
+        $state = self::$state;
+        return bSecure::$loginBase.'?client_id='.$clientId.'&scope='.$scope.'&response_type='.$response_type.'&state='.$state;
+    }
+    /**
+     * Sets the authentication request payload.
+     *
      */
     private static function setAuthenticationPayload()
     {
@@ -67,7 +79,7 @@ class SSO
     }
 
     /**
-     * @return string the Auth Token used for requests
+     * @return array The customer object
      */
     public static function customerProfile($authCode)
     {
@@ -87,7 +99,10 @@ class SSO
 
 
     /**
-     * @return string the Auth Token used for requests
+     * @return string the authentication request weblink used for sso requests
+     *
+     * @throws \bSecure\Exception\UnexpectedValueException if the request fails
+     *
      */
     public static function clientAuthenticate($state)
     {
@@ -102,8 +117,8 @@ class SSO
         }
 
         else{
-
-            return SSOController::authenticateClient(self::setAuthenticationPayload());
+            self::setAuthenticationPayload();
+            return self::setAuthenticationLink();
         }
     }
 }

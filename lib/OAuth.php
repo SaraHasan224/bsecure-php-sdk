@@ -82,7 +82,6 @@ abstract class OAuth
 
     private static function verifyAppCredentials()
     {
-
         return [
           "grant_type"=> self::GRANT_TYPE,
           'client_id' => self::_getClientId(),

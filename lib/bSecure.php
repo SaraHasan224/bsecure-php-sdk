@@ -58,6 +58,7 @@ class bSecure
      */
     public static function setClientId($clientId)
     {
+        self::$authToken = null;
         self::$clientId = $clientId;
     }
 
@@ -76,6 +77,7 @@ class bSecure
      */
     public static function setClientSecret($clientSecret)
     {
+        self::$authToken = null;
         self::$clientSecret = $clientSecret;
     }
 

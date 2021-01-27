@@ -60,16 +60,20 @@ class ApiRequest
      *
      * @return array
      */
-    private static function _defaultHeaders($apiKey = false)
+    private static function _defaultHeaders($authKey = false)
     {
         $authHeader = [];
-        $defaultHeaders = [
-//          'Content-Type' => 'application/json',
-        ];
+        $defaultHeaders = [];
 
-        if($apiKey)
+        if($authKey)
         {
-            $authHeader = ['Authorization' => 'Bearer ' .bSecure::getAuthToken()];
+            $authToken = bSecure::getAuthToken();
+            if(gettype($authToken) == "string")
+            {
+                $authHeader = ['Authorization' => 'Bearer ' .$authToken];
+            }else if(gettype($authToken) == "object"){
+                $authHeader = [];
+            }
         }
         $headers = array_merge($defaultHeaders,$authHeader);
         return $headers;

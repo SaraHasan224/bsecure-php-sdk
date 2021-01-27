@@ -3,7 +3,7 @@
 namespace bSecure\Exception;
 
 /**
- * Implements properties and methods common to all (non-SPL) Stripe exceptions.
+ * Implements properties and methods common to all bSecure exceptions.
  */
 abstract class ApiErrorException extends \Exception implements ExceptionInterface
 {
@@ -13,7 +13,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     protected $httpStatus;
     protected $jsonBody;
     protected $requestId;
-    protected $stripeCode;
+    protected $code;
 
     /**
      * Creates a new API error exception.
@@ -22,8 +22,8 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
      * @param null|int $httpStatus the HTTP status code
      * @param null|string $httpBody the HTTP body as a string
      * @param null|array $jsonBody the JSON deserialized body
-     * @param null|array|\Stripe\Util\CaseInsensitiveArray $httpHeaders the HTTP headers array
-     * @param null|string $stripeCode the Stripe error code
+     * @param null|array|\bSecure\Util\CaseInsensitiveArray $httpHeaders the HTTP headers array
+     * @param null|string $code the bSecure error code
      *
      * @return static
      */
@@ -33,14 +33,14 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
       $httpBody = null,
       $jsonBody = null,
       $httpHeaders = null,
-      $stripeCode = null
+      $code = null
     ) {
         $instance = new static($message);
         $instance->setHttpStatus($httpStatus);
         $instance->setHttpBody($httpBody);
         $instance->setJsonBody($jsonBody);
         $instance->setHttpHeaders($httpHeaders);
-        $instance->setStripeCode($stripeCode);
+        $instance->setBsecureCode($code);
 
         $instance->setRequestId(null);
         if ($httpHeaders && isset($httpHeaders['Request-Id'])) {
@@ -53,9 +53,9 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     }
 
     /**
-     * Gets the Stripe error object.
+     * Gets the bSecure error object.
      *
-     * @return null|\Stripe\ErrorObject
+     * @return null|\bSecure\ErrorObject
      */
     public function getError()
     {
@@ -65,7 +65,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     /**
      * Sets the Stripe error object.
      *
-     * @param null|\Stripe\ErrorObject $error
+     * @param null|\bSecure\ErrorObject $error
      */
     public function setError($error)
     {
@@ -95,7 +95,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     /**
      * Gets the HTTP headers array.
      *
-     * @return null|array|\Stripe\Util\CaseInsensitiveArray
+     * @return null|array|\bSecure\Util\CaseInsensitiveArray
      */
     public function getHttpHeaders()
     {
@@ -105,7 +105,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     /**
      * Sets the HTTP headers array.
      *
-     * @param null|array|\Stripe\Util\CaseInsensitiveArray $httpHeaders
+     * @param null|array|\bSecure\Util\CaseInsensitiveArray $httpHeaders
      */
     public function setHttpHeaders($httpHeaders)
     {
@@ -153,7 +153,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     }
 
     /**
-     * Gets the Stripe request ID.
+     * Gets the bSecure request ID.
      *
      * @return null|string
      */
@@ -163,13 +163,13 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     }
 
     /**
-     * Sets the Stripe error code.
+     * Sets the bSecure error code.
      *
-     * @param null|string $stripeCode
+     * @param null|string $code
      */
-    public function setStripeCode($stripeCode)
+    public function setBsecureCode($code)
     {
-        $this->stripeCode = $stripeCode;
+        $this->code = $code;
     }
 
     /**
@@ -191,6 +191,6 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
             return null;
         }
 
-        return \Stripe\ErrorObject::constructFrom($this->jsonBody['error']);
+        return \bSecure\ErrorObject::constructFrom($this->jsonBody['error']);
     }
 }

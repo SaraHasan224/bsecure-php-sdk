@@ -9,7 +9,7 @@ namespace bSecure\Util;
  * Each header field consists of a name followed by a colon (":") and the field value. Field names
  * are case-insensitive.
  *
- * In the context of stripe-php, this is useful because the API will return headers with different
+ * In the context of bSecure-php, this is useful because the API will return headers with different
  * case depending on whether HTTP/2 is used or not (with HTTP/2, headers are always in lowercase).
  */
 class CaseInsensitiveArray implements \ArrayAccess, \Countable, \IteratorAggregate
