@@ -9,7 +9,7 @@ It is built for *desktop*, *tablet*, and *mobile devices* and is continuously te
 
 
 ### Manual Installation
-If you do not wish to use Composer, you can download the latest release. Then, to use the bindings, include the init.php file.
+To use the bindings, include the init.php file.
 
 `` require_once('/path/to/bSecure-php/init.php')``
 
@@ -18,7 +18,7 @@ If you do not wish to use Composer, you can download the latest release. Then, t
 The bindings require the following extensions in order to work properly:
 * curl
 
-If you install manually, you'll want to make sure that these extensions are available.
+If you want to install the package manually, you'll have to make sure that these extensions are available.
 
 ### Documentation
 Visit our Site  [bSecure](https://www.bsecure.pk/) to read the documentation and get support.
@@ -46,10 +46,10 @@ To call below mentioned functions of bSecure, you first have to authenticate you
 Following function will be used to authenticate your client:
 
 ```
-    \bSecure\bSecure::setClientId('<YOUR-CLIENT-ID>');
-    \bSecure\bSecure::setClientSecret('<YOUR-CLIENT-SECRET>');
-    \bSecure\bSecure::setAppEnvironment('<YOUR-APP-ENVIRONMENT>');
-    \bSecure\bSecure::getAuthToken();
+\bSecure\bSecure::setClientId('<YOUR-CLIENT-ID>');
+\bSecure\bSecure::setClientSecret('<YOUR-CLIENT-SECRET>');
+\bSecure\bSecure::setAppEnvironment('<YOUR-APP-ENVIRONMENT>');
+\bSecure\bSecure::getAuthToken();
 ```
 ``
 <YOUR-CLIENT-ID> and <YOUR-CLIENT-SECRET> can be obtained from Builder's Portal for your application.
@@ -149,6 +149,7 @@ In response createOrder(), will return order expiry, checkout_url, order_referen
 array (
   'expiry' => '2020-11-27 10:55:14',
   'checkout_url' => 'bSecure-checkout-url',
+  'fallback_url' => 'bSecure-fallback-url',
   'order_reference' => 'bsecure-reference',
   'merchant_order_id' => '<YOUR-ORDER-ID>',
 ) 
@@ -158,12 +159,13 @@ array (
 if(!empty($result['checkout_url']))
 return redirect($result['checkout_url']); 
 ```
->If you have Android or IOS SDK then initialize your sdk and provide order_reference to it
+When order is created successfully on bSecure, you will be redirected to bSecure checkout app where you will process your checkout.
+
+>If you have Android or IOS SDK then initialize your sdk and provide order_reference,checkout_url and fallback_url to it
 ```
 if(!empty($result']))
 return $result; 
 ```
-When order is created successfully on bSecure, you will be redirected to bSecure SDK or bSecure checkout app where you will process your checkout.
 
 
 #### Callback on Order Placement
