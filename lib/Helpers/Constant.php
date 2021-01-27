@@ -7,6 +7,9 @@ class Constant
     const YES = 1;
     const NO = 0;
 
+    const SCOPE = "profile";
+    const RESPONSE_TYPE = "code";
+
     const HTTP_RESPONSE_STATUSES = [
       'success'             => 200,
       'failed'              => 400,
@@ -31,7 +34,6 @@ class Constant
       'oauth'               => Constant::API_VERSION . '/oauth/token',
       'create_order' => Constant::API_VERSION . '/order/create',
       'order_status' => Constant::API_VERSION . '/order/status',
-      'manual_order_status_update' => Constant::API_VERSION . '/order/update-status',
       'verify_client' => Constant::API_VERSION . '/sso/verify-client',
       'customer_profile' => Constant::API_VERSION . '/sso/customer/profile',
     ];

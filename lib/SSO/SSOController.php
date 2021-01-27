@@ -4,7 +4,7 @@ namespace bSecure;
 
 use bSecure\Helpers\Constant;
 
-abstract class OrderController
+abstract class SSOController
 {
     /**
      * Generate authorization credentials to connect your builder's account to your platform and
@@ -16,14 +16,14 @@ abstract class OrderController
      *
      * @return OAuthObject object containing your authorization credentials
      */
-    public static function createOrder($orderPayload)
+    public static function authenticateClient($payload)
     {
         $requestor = new ApiRequest();
         $response = $requestor->request(
           'post',
-          Constant::API_ENDPOINTS['create_order'],
-          $orderPayload,
-          Constant::YES
+          Constant::API_ENDPOINTS['verify_client'],
+          $payload,
+          Constant::NO
         );
         return $response[0];
     }
@@ -37,13 +37,13 @@ abstract class OrderController
      *
      * @return OAuthObject object containing your authorization credentials
      */
-    public static function orderStatus($orderRef)
+    public static function customerProfile($param)
     {
         $requestor = new ApiRequest();
         $response = $requestor->request(
           'post',
-          Constant::API_ENDPOINTS['order_status'],
-          ['order_ref' => $orderRef],
+          Constant::API_ENDPOINTS['customer_profile'],
+          $param,
           Constant::YES
         );
         return $response[0];

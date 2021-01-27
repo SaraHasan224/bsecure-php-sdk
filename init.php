@@ -14,6 +14,10 @@ require __DIR__ . '/lib/OAuth.php';
 require __DIR__ . '/lib/Checkout/Order.php';
 require __DIR__ . '/lib/Checkout/OrderController.php';
 
+// Order singleton
+require __DIR__ . '/lib/SSO/SSO.php';
+require __DIR__ . '/lib/SSO/SSOController.php';
+
 // API Request Response
 require __DIR__ . '/lib/ApiRequest.php';
 require __DIR__ . '/lib/ApiResponse.php';

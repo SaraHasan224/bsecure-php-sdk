@@ -266,7 +266,24 @@ class Order
         if($access_token == null)
             throw new Exception\AuthenticationException($msg);
         else{
-            return OrderController::createOrder(self::$orderPayload);
+            return SSOController::createOrder(self::$orderPayload);
         }
+    }
+
+
+    /**
+     * @return string the Auth Token used for requests
+     */
+    public static function orderStatus($order_ref)
+    {
+        if($order_ref == null || $order_ref == "")
+        {
+            $msg = 'No order_ref provided. See"'
+              . Constant::DOCUMENTATION_LINK.' for details, '
+              . 'or email '.Constant::SUPPORT_EMAIL.' if you have any questions.';
+            throw new Exception\UnexpectedValueException($msg);
+        }
+
+        return SSOController::orderStatus($order_ref);
     }
 }
