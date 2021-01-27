@@ -217,7 +217,7 @@ Verify the state you received in the callback by matching it to the value you st
 request, you should only proceed if and only if both values match.
 
 ### Get Customer Profile
-Auth_code recieved from **[Client Authorization]((#client-authorization))** should be passed to method below to get customer profile. 
+Auth_code recieved from **[Client Authorization](#client-authorization)** should be passed to method below to get customer profile. 
 
 
 ```
