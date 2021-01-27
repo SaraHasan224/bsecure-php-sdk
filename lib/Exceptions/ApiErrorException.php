@@ -63,7 +63,7 @@ abstract class ApiErrorException extends \Exception implements ExceptionInterfac
     }
 
     /**
-     * Sets the Stripe error object.
+     * Sets the bSecure error object.
      *
      * @param null|\bSecure\ErrorObject $error
      */

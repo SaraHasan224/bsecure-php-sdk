@@ -16,7 +16,7 @@ abstract class OAuth
      *
      * @param array $params
      *
-     * @throws \Stripe\Exception\OAuth\OAuthErrorException if the request fails
+     * @throws \bSecure\ApiResponse if the request fails
      *
      * @return OAuthObject object containing your authorization credentials
      */
