@@ -149,7 +149,7 @@ In response createOrder(), will return order expiry, checkout_url, order_referen
 array (
   'expiry' => '2020-11-27 10:55:14',
   'checkout_url' => 'bSecure-checkout-url',
-  'fallback_url' => 'bSecure-fallback-url',
+  'store_url' => 'store-url',
   'order_reference' => 'bsecure-reference',
   'merchant_order_id' => '<YOUR-ORDER-ID>',
 ) 
@@ -161,7 +161,7 @@ return redirect($result['checkout_url']);
 ```
 When order is created successfully on bSecure, you will be redirected to bSecure checkout app where you will process your checkout.
 
->If you have Android or IOS SDK then initialize your sdk and provide order_reference,checkout_url and fallback_url to it
+>If you have Android or IOS SDK then initialize your sdk and provide order_reference,checkout_url and store_url to it
 ```
 if(!empty($result']))
 return $result; 
