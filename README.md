@@ -5,7 +5,7 @@
 
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/bsecure/bsecure-php.svg?style=flat-square)](https://packagist.org/packages/bsecure/bsecure-php)
-[![Latest Stable Version](https://poser.pugx.org/bsecure/bsecure-php/v)](//packagist.org/packages/bsecure/bsecure-php) 
+[![Latest Stable Version](https://poser.pugx.org/bsecure/bsecure-php/v)](https://packagist.org/packages/bsecure/bsecure-php) 
 [![Total Downloads](https://img.shields.io/packagist/dt/bsecure/bsecure-php.svg?style=flat-square)](https://packagist.org/packages/bsecure/bsecure-php)
 [![License](https://poser.pugx.org/bsecure/bsecure-php/license)](//packagist.org/packages/bsecure/bsecure-php)
 [![Build Status](https://scrutinizer-ci.com/g/bSecureCheckout/bsecure-php/badges/build.png?b=master)](https://scrutinizer-ci.com/g/bSecureCheckout/bsecure-php/build-status/master)
