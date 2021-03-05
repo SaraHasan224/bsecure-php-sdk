@@ -23,7 +23,7 @@ class Constant
 
     const AUTH_SERVER_URL = 'https://api.bsecure.pk/';
 
-    const LOGIN_REDIRECT_URL = 'http://login.bsecure.pk/auth/sso';
+    const LOGIN_REDIRECT_URL = 'https://login.bsecure.pk/auth/sso';
 
 
     const DEFAULT_APP_ENVIRONMENT = 'sandbox';
