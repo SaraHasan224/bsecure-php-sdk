@@ -1,7 +1,6 @@
 {
   "name": "bsecure/bsecure-php",
   "description": "PHP library for the bSecure.",
-  "type": "library",
   "keywords": [
     "bsecure",
     "universal-checkout",
