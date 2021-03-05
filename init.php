@@ -24,10 +24,17 @@ require __DIR__ . '/lib/ApiResponse.php';
 
 // Exceptions
 require __DIR__ . '/lib/Exceptions/init.php';
+require __DIR__ . '/lib/Exceptions/ExceptionInterface.php';
+require __DIR__ . '/lib/Exceptions/ApiErrorException.php';
+require __DIR__ . '/lib/Exceptions/UnexpectedValueException.php';
+require __DIR__ . '/lib/Exceptions/InvalidRequestException.php';
+require __DIR__ . '/lib/Exceptions/AuthenticationException.php';
+
+// Utils
+require __DIR__ . '/lib/Utils/CaseInsensitiveArray.php';
+require __DIR__ . '/lib/Utils/RandomGenerator.php';
+//require __DIR__ . '/lib/Utils/init.php';
 
 // HttpClient
 require __DIR__ . '/lib/HttpClient/ClientInterface.php';
 require __DIR__ . '/lib/HttpClient/CurlClient.php';
-
-// Utils
-require __DIR__ . '/lib/Utils/init.php';
