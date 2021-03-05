@@ -109,8 +109,9 @@ class bSecure
     public static function getAuthToken()
     {
         if(self::$authToken == null || gettype(self::$authToken) != "string"){
-            $token =  self::setAuthToken();
-            $tokenBody = (array_key_exists('body', $token)) ? $token->body : $token;
+            (array) $token =  self::setAuthToken();
+
+            $tokenBody = $token->body;
             if(array_key_exists('access_token',$tokenBody)){
                 self::$authTokenEnv = array_key_exists('environment',$tokenBody) ? $tokenBody['environment'] :null;
                 self::$authToken = array_key_exists('access_token',$tokenBody) ? $tokenBody['access_token'] :null;
